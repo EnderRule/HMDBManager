@@ -410,11 +410,8 @@ public extension NSObject {
 
             let propertys = self.cachePropertysOf(theClass: theClass)
             for property in propertys{
-                var tempname = ""
-                if let namePointer =  property_getName(property){
-                    tempname = String.init(cString: namePointer)
-                }
-                
+                let namePointer =  property_getName(property)
+                let tempname = String.init(cString: namePointer)
                 var tempType = ""
                 if let typePointer = property_getAttributes(property){
                     tempType = String.init(cString: typePointer)
@@ -459,11 +456,9 @@ public extension NSObject {
         let countInt = Int(count[0])
         
         for i in 0..<countInt{
-            if  let property = buff![i]{
-                result.append(property)
-            }
+            let property = buff![i]
+            result.append(property)
         }
-        
         free(count)
         free(buff)
         
@@ -475,7 +470,6 @@ public extension NSObject {
                 }
             }
         }
-        
         return result
     }
     
