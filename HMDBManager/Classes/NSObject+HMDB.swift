@@ -452,7 +452,6 @@ public extension NSObject {
      - returns: 属性名称数组
      */
     public class func getAllPropertysOf(theClass:AnyClass,includeSupers:Bool)->[objc_property_t]{
-        
         var result = [objc_property_t]()
         let count = UnsafeMutablePointer<UInt32>.allocate(capacity: 0)
         let buff = class_copyPropertyList(theClass, count)
@@ -462,7 +461,6 @@ public extension NSObject {
             let property = buff![i]
             result.append(property)
         }
-        
         free(count)
         free(buff)
         
