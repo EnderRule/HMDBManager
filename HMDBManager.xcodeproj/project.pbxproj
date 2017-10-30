@@ -349,6 +349,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = fulladvantage.linking.HMDBManager;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_PRECOMPILE_BRIDGING_HEADER = NO;
 				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
@@ -368,6 +369,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = fulladvantage.linking.HMDBManager;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_PRECOMPILE_BRIDGING_HEADER = NO;
 				SWIFT_VERSION = 4.0;
 			};
 			name = Release;

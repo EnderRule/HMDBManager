@@ -410,8 +410,8 @@ public extension NSObject {
 
             let propertys = self.cachePropertysOf(theClass: theClass)
             for property in propertys{
-             
-                let namePointer =  property_getName(property)
+                
+                 let namePointer =  property_getName(property)
                 let tempname = String.init(cString: namePointer)
                 
                 
