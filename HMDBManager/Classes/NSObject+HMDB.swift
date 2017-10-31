@@ -141,7 +141,7 @@ public extension NSObject {
             
             var fields:[String] = ((tableFieldInfos[tableName] ?? [:]) as NSDictionary).allKeys as? [String] ?? []
             for field in fields{
-                let dbvalue = self.encodeValueFor(key: field) // NSObject.serialized(value: self.value(forKey: field) ?? "")
+                let dbvalue = self.encodeValueFor(key: field)
                 dbvalues.append(dbvalue)
             }
             
@@ -297,7 +297,14 @@ public extension NSObject {
     
     
     private func encodeValueFor(key:String)->Any{
-        return (self.classForCoder as! NSObject.Type).serialized(value:self.value(forKey: key) ?? "")
+        var value:Any?
+        if let property = NSObject.cachePropertyOf(theClass: self.classForCoder, propertyName: key){
+            let name = property_getName(property)
+            if let ivar = class_getInstanceVariable(self.classForCoder, name){
+                value = object_getIvar(self , ivar)
+            }
+        }
+        return (self.classForCoder as! NSObject.Type).serialized(value:value ?? "")
     }
     
     private func decode(dbValue:Any,forkey:String){
@@ -431,6 +438,18 @@ public extension NSObject {
             return resultType ?? "NOT_FOUND"
         }
         return cacheType ?? "NOT_FOUND"
+    }
+    
+    public  class func cachePropertyOf(theClass:AnyClass,propertyName:String)->objc_property_t?{
+        let propertys = self.cachePropertysOf(theClass: self.classForCoder())
+        for property in propertys{
+            let namePointer =  property_getName(property)
+            let tempname = String.init(cString: namePointer)
+            if   tempname == propertyName{
+                return property
+            }
+        }
+        return nil
     }
     
     public  class func cachePropertysOf(theClass:AnyClass)->[objc_property_t]{
