@@ -16,9 +16,3 @@ FOUNDATION_EXPORT const unsigned char HMDBManagerVersionString[];
 
 // In this header, you should import all the public headers of your framework using statements like #import <HMDBManager/PublicHeader.h>
 
-
-#import <HMDBManager/FMResultSet.h>
-#import <HMDBManager/FMDatabasePool.h>
-#import <HMDBManager/FMDatabase.h>
-#import <HMDBManager/FMDB.h>
-#import <HMDBManager/FMDatabaseAdditions.h>

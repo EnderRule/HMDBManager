@@ -8,6 +8,7 @@
 
 import UIKit
 
+import FMDB
 
 public class MyFMDBQueue:FMDatabaseQueue{
 
@@ -27,7 +28,6 @@ public class MyFMDBQueue:FMDatabaseQueue{
 
 
 var cachePropertysDic:[String:[objc_property_t]] = [:]
-
 var cachePropertyTypesDic:[String:String] = [:]
 
 public extension NSObject {
