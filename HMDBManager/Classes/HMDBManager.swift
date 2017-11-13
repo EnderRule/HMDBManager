@@ -8,7 +8,8 @@
 
 import UIKit
 import Foundation
- 
+
+import FMDB
 
 let disableHMDBLog:Bool = false
 
@@ -108,7 +109,7 @@ public class HMDBManager: NSObject {
             }
 //            disableHMDBLog ? () : debugPrint("\(tableName) \(column) \(rs.bool(forColumn: "pk") ? "is":"is not") primaryKey")
             
-            if column.characters.count > 0 {
+            if column.lenght > 0 {
                 currentColumns.append(column)
             }
         }
@@ -135,7 +136,7 @@ public class HMDBManager: NSObject {
         
         let sql:String = self.sqlOfCreateTable(cls:cls)
 
-        if sql.characters.count == 0 {
+        if sql.lenght == 0 {
             return false
         }
         
@@ -159,7 +160,7 @@ public class HMDBManager: NSObject {
         for column in shouldAddColumns{
             let rawtype = NSObject.cachePropertyTypeOf(theClass: cls , propertyName: column)
             let sqltype = self.sqlTypeOfProperty(rawType: rawtype)
-            if sqltype.characters.count > 0 {
+            if sqltype.lenght > 0 {
                 if  !self.alertTable(cls: cls , addColumn: column, type: sqltype,database:database){
                     disableHMDBLog ? () : debugPrint("fail to alert table \(tableName) add column \(column) \(sqltype)")
                 }
@@ -239,7 +240,7 @@ public class HMDBManager: NSObject {
                 
                 let sqlType = self.sqlTypeOfProperty(rawType: rawType)
 
-                if sqlType.characters.count > 0 {
+                if sqlType.lenght > 0 {
                     colums.append("\(field) \(sqlType),")
                     
                     realDbFields.updateValue(sqlType, forKey: field)
@@ -253,10 +254,10 @@ public class HMDBManager: NSObject {
             tableFieldInfos.updateValue(realDbFields, forKey: tableName)
             
             if colums.hasSuffix(","){
-                colums = (colums as NSString).substring(to: colums.characters.count - 1)
+                colums = (colums as NSString).substring(to: colums.lenght - 1)
             }
             
-            if colums.characters.count == 0 {
+            if colums.lenght == 0 {
                 debugPrint("create table \(tableName) but has no surported dbFields")
                 return ""
             }

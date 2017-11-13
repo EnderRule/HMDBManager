@@ -178,7 +178,7 @@ public extension NSObject {
                 var valuesHolders = ""
 
                 valuesHolders = ("" as NSString).padding(toLength: fields.count * 2, withPad: "?,", startingAt: 0)
-                valuesHolders = (valuesHolders as NSString).substring(to: valuesHolders.characters.count - 1)
+                valuesHolders = (valuesHolders as NSString).substring(to: valuesHolders.lenght - 1)
             
                 let sql:String = "\(action) into \"\(tableName)\" (\"\(columns)\") values (\(valuesHolders))"
                 
@@ -206,7 +206,7 @@ public extension NSObject {
             
             var primaryKeys = (self as! HMDBModelDelegate).dbPrimaryKeys()
             for obj in primaryKeys.enumerated(){
-                if obj.element.characters.count <= 0 {
+                if obj.element.lenght <= 0 {
                     primaryKeys.remove(at: primaryKeys.index(of: obj.element)!)
                 }
             }
@@ -227,7 +227,7 @@ public extension NSObject {
                     primaryValues.append(self.encodeValueFor(key: pkobj))
                 }
                 var valuesHolders = ("" as NSString).padding(toLength: primaryValues.count * 2, withPad: "?,", startingAt: 0)
-                valuesHolders = (valuesHolders as NSString).substring(to: valuesHolders.characters.count - 1)
+                valuesHolders = (valuesHolders as NSString).substring(to: valuesHolders.lenght - 1)
                 
                 sql = "delete from \(tableName) where (\((primaryKeys as NSArray).componentsJoined(by: ","))) = (\(valuesHolders)) "
             }
@@ -252,10 +252,10 @@ public extension NSObject {
         
             let tableName:String = "\(self.classForCoder())"
             var sql:String = "select * from \(tableName) "
-            if whereStr?.characters.count ?? 0 > 0 {
+            if whereStr?.lenght ?? 0 > 0 {
                 sql.append(" where \(whereStr!) ")
             }
-            if orderFields?.characters.count ?? 0 > 0{
+            if orderFields?.lenght ?? 0 > 0{
                 sql.append(" order by \(orderFields!) ")
             }
             if offset > 0 || limit > 0 {
@@ -410,9 +410,9 @@ public extension NSObject {
     
     public  class func cachePropertyTypeOf(theClass:AnyClass,propertyName:String)->String{
         let cacheKey = NSStringFromClass(theClass).appending(propertyName)
-        var cacheType = cachePropertyTypesDic[cacheKey]
+        let cacheType = cachePropertyTypesDic[cacheKey]
     
-        if cacheType?.characters.count ?? 0 <= 0 {
+        if cacheType?.lenght ?? 0 <= 0 {
             var resultType:String?
 
             let propertys = self.cachePropertysOf(theClass: theClass)
@@ -426,7 +426,7 @@ public extension NSObject {
                 if let typePointer = property_getAttributes(property){
                     tempType = String.init(cString: typePointer)
                 }                
-                if tempname.characters.count > 0 && tempType.characters.count > 0 {
+                if tempname.lenght > 0 && tempType.lenght > 0 {
                     let tempcacheKey = NSStringFromClass(theClass).appending(tempname)
                     cachePropertyTypesDic.updateValue(tempType, forKey: tempcacheKey)
                     
@@ -497,6 +497,14 @@ public extension NSObject {
     
 }
 
+extension String {
+    var lenght:Int {
+        get{
+            return self.lengthOfBytes(using: .utf8)
+        }
+    }
+    
+}
 
 
 
